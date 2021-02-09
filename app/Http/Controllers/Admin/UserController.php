@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Role;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -45,23 +46,27 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        dd($user);
+        $roles=Role::all();
+        return view('admin.users.edit',[
+            'user'=>$user,
+            'roles'=>$roles,
+        ]);
     }
 
     
     public function update(Request $request, User $user)
     {
-        //
+        $user->roles()->sync($request->roles);
+        return redirect()->route('user.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(User $user)
     {
-        //
+        $user->roles()->detach();
+        $user->delete();
+        return redirect()->route('user.index');
+
+
     }
 }
