@@ -28,8 +28,8 @@
                         <td>{{ $user['email'] }}</td>
                         <td>{{ $user['created_at'] }}</td>
                         <td>
-                            <button class="btn btn-primary">edit</button>
-                            <button class="btn btn-danger">del</button>
+                            <a href="{{ route('user.edit',$user['id']) }}" class="btn btn-primary">edit</a>
+                            <a href="{{ route('user.edit',$user['id']) }}" class="btn btn-danger">delete</a>
                         </td>
                         </tr>
                     @endforeach
