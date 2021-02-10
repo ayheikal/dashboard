@@ -25,7 +25,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'admin','namespace'=>'Admin'], function () {
+Route::group(['prefix' => 'admin','namespace'=>'Admin','middleware'=>'can:manage-users'], function () {
     
     Route::resource('user', 'UserController')->except(['show','create','store']);
 });
