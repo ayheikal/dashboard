@@ -26,7 +26,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-  
+
 
     /**
      * Display the specified resource.
@@ -58,14 +58,25 @@ class UserController extends Controller
         ]);
     }
 
-    
+
     public function update(Request $request, User $user)
     {
+        // dd($request->all());
+        $user1=User::where('id',$user->id)->update([
+            'name'=>$request->name,
+            'email'=>$request->email,
+        ]);
         $user->roles()->sync($request->roles);
+        if($user1){
+            session()->flash('success','updated');
+        }else{
+            session()->flash('error',' not updated');
+
+        }
         return redirect()->route('user.index');
     }
 
-    
+
     public function destroy(User $user)
     {
         if(Gate::denies('delete-users')){
